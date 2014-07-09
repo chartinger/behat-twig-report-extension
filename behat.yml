@@ -1,0 +1,15 @@
+default:
+
+example:
+  autoload: "%paths.base%/example-features/bootstrap"
+  extensions:
+    chartinger\Behat\TwigReportExtension\Extension:
+      templates:
+        file: default.twig
+      output:
+        file: ./output/index.html
+  suites:
+    example:
+      paths:    [ "%paths.base%/example-features" ]
+      contexts: [ FeatureContext ]
+      bootstrap: "%paths.base%/example-features"
