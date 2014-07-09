@@ -11,6 +11,8 @@ It term "report" in the extension name is deliberate as the output file will be 
 
 An example can be [found here](http://htmlpreview.github.io/?https://raw.githubusercontent.com/chartinger/behat-twig-report-extension/master/doc/example-output.html)
 
+![Screenshot](https://raw.githubusercontent.com/chartinger/behat-twig-report-extension/master/doc/example.png "Example Screenshot")
+
 ## Installation
 
 In your `composer.json` add
