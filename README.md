@@ -9,6 +9,8 @@ This extension provides an easy way to create reports of your test runs. It uses
 
 It term "report" in the extension name is deliberate as the output file will be created after all tests are processed. 
 
+An example can be [found here](http://htmlpreview.github.io/?https://raw.githubusercontent.com/chartinger/behat-twig-report-extension/master/doc/example-output.html)
+
 ## Installation
 
 In your `composer.json` add
