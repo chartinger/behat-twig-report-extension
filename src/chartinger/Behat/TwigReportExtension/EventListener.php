@@ -31,7 +31,7 @@ class EventListener implements EventSubscriberInterface
   
   private $features = array();
   private $scenarios = array();
-  private $backgrounds = array();
+  private $background = null;
   private $steps = array();
   
   private $statistics = array();
@@ -79,15 +79,16 @@ class EventListener implements EventSubscriberInterface
   
   public function afterFeature(AfterFeatureTested $event)
   {
-    $this->features[] = new Feature($event, $this->scenarios, $this->backgrounds);
+    $this->features[] = new Feature($event, $this->scenarios, $this->background);
     $this->scenarios = array();
-    $this->backgrounds = array();
+    $this->background = null;
   }
 
   public function afterBackground(AfterBackgroundTested $event)
   {
-    $this->backgrounds[] = new Background($event, $this->steps);
-    $this->steps = array();
+    $this->background = new Background($event, $this->steps);
+    $background_steps = count($event->getBackground()->getSteps());
+    $this->steps = array_slice($this->steps, 0, count($this->steps) - $background_steps);
   }
   
   

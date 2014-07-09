@@ -198,4 +198,32 @@ class FeatureContext implements SnippetAcceptingContext
     {
         throw new Exception();
     }
+
+    /**
+     * @Given I have a parameter :arg1 with value :arg2
+     */
+    public function iHaveAParameterWithValue($arg1, $arg2)
+    {
+    }
+
+    /**
+     * @When I POST these parameters to :arg1
+     */
+    public function iPostTheseParametersTo($arg1)
+    {
+    }
+
+    /**
+     * @Then I should get the json object:
+     */
+    public function iShouldGetTheJsonObject(PyStringNode $string)
+    {
+    }
+
+    /**
+     * @Then the response code should be :arg1
+     */
+    public function theResponseCodeShouldBe($arg1)
+    {
+    }
 }

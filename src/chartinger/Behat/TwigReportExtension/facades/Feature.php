@@ -7,13 +7,13 @@ class Feature
 {
   private $event;
   private $scenarios;
-  private $backgrounds;
+  private $background;
   
-  public function __construct(AfterFeatureTested $event, $scenarios, $backgrounds)
+  public function __construct(AfterFeatureTested $event, $scenarios, $background)
   {
     $this->event = $event;
     $this->scenarios = $scenarios;
-    $this->backgrounds = $backgrounds;
+    $this->background = $background;
   }
   
   public function getTitle()
@@ -36,8 +36,8 @@ class Feature
     return $this->scenarios;
   }
   
-  public function getBackgrounds()
+  public function getBackground()
   {
-    return $this->backgrounds;
+    return $this->background;
   }
 }

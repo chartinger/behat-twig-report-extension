@@ -73,7 +73,7 @@
         <div class="col-md-2">
         <ul class="nav nav-pills nav-stacked" role="tablist">
           {% if feature.description %}<li class="active"><a href="#description-tab-{{ loop.index }}" role="tab" data-toggle="tab">Description</a></li>{% endif %}
-          {% if (feature.backgrounds|length > 0) %}<li><a href="#background-tab-{{ loop.index }}" role="tab" data-toggle="tab">Backgrounds</a></li>{% endif %}
+          {% if feature.background %}<li><a href="#background-tab-{{ loop.index }}" role="tab" data-toggle="tab">Background</a></li>{% endif %}
           <li {% if not feature.description %}class="active"{% endif %}><a href="#scenario-tab-{{ loop.index }}" role="tab" data-toggle="tab">Scenarios</a></li>
         </ul>
         </div>
@@ -84,32 +84,43 @@
             <p>{{ feature.description|nl2br }}</p>
           </div>
           {% endif %}
-          {% if (feature.backgrounds|length > 0) %}
+          {% if (feature.background) %}
           <div class="tab-pane" id="background-tab-{{ loop.index }}">
-            {# Background list BEGIN #}
-            {% for background in feature.backgrounds %}
             <div class="panel {{ default.result_panel_class(background.result) }}">
-              <div class="panel-heading" data-toggle="collapse" data-target="#background-{{ loop.index }}-{{ loop.parent.loop.index }}">
+              <div class="panel-heading">
                 {{ default.result_glyph(background.result) }}
-                <b>Background:</b> {{ background.title  }}
-                <span class="badge pull-right">{{ background.steps|length }}</span>
+                <b>Background:</b> {{ feature.background.title  }}
+                <span class="badge pull-right">{{ feature.background.steps|length }}</span>
               </div>
-              <div class="panel-collapse collapse" id="background-{{ loop.index }}-{{ loop.parent.loop.index }}">
                 <div class="panel-body">
-                  <h4  class="page-header">Steps:</h4>
                   <ul class="list-group">
-                  {% for step in background.steps %}
+                  {% for step in feature.background.steps %}
                      <li class="list-group-item {% if step.result == 20 %}list-group-item-warning{% elseif step.result == 10%}disabled{% elseif step.result == 99 %}list-group-item-danger{% else %}list-group-item-success{% endif %}">
-                       {{ default.result_glyph(step.result) }}
-                       {{ step.text }}
+                     {{ default.result_glyph(step.result) }}
+                     {{ step.text }}
+                     {% for argument in step.arguments %}
+                        {% if argument.text %}<pre class="stepargument"><code>{{ argument.text }}</code></pre>{% endif %}
+                        {% if argument.table %}
+                        <div class="panel panel-default stepargument"><div class="panel-body">
+                        <table class="table table-condensed">
+                          {% for row in argument.table %}
+                          <tr>
+                            {% for col in row %}
+                              {% if loop.parent.loop.first %}<th>{% else %}<td>{% endif %}
+                              {{ col }}
+                              {% if loop.parent.loop.first %}</th>{% else %}</td>{% endif %}
+                            {% endfor %}
+                          </tr>
+                          {% endfor %}
+                       </table>
+                       </div></div>
+                       {% endif %}
+                     {% endfor %}
                      </li>
                   {% endfor %}
                   </ul>
-                </div>
               </div>
             </div>
-            {% endfor %}
-            {# Background list END #}
           </div>
           {% endif %}
           <div class="tab-pane {% if not feature.description %}active{% endif %}" id="scenario-tab-{{ loop.index }}">

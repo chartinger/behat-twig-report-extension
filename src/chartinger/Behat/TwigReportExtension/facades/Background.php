@@ -12,7 +12,8 @@ class Background
   public function __construct(AfterBackgroundTested $event, $steps)
   {
     $this->event = $event;
-    $this->steps = $steps;
+    $num_steps = count($event->getBackground()->getSteps());
+    $this->steps = array_slice($steps, -$num_steps);
   }
   
   public function getTitle()
