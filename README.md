@@ -55,7 +55,6 @@ default:
 
 ## Known Issues / Limitations
 
-* Only one suite is supported, multiple suites will overwrite the output file!
 * No output of exact errors
 
 
