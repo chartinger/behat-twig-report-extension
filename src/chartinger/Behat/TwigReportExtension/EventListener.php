@@ -22,6 +22,8 @@ use chartinger\Behat\TwigReportExtension\facades\Feature;
 use chartinger\Behat\TwigReportExtension\facades\Background;
 use chartinger\Behat\TwigReportExtension\facades\Scenario;
 use chartinger\Behat\TwigReportExtension\facades\OutlineScenario;
+use Behat\Testwork\EventDispatcher\Event\ExerciseCompleted;
+use Behat\Testwork\EventDispatcher\Event\AfterExerciseCompleted;
 
 class EventListener implements EventSubscriberInterface
 {
@@ -53,7 +55,8 @@ class EventListener implements EventSubscriberInterface
         ScenarioTested::AFTER => 'afterScenario', 
         SuiteTested::AFTER => 'afterSuite',
         BackgroundTested::AFTER => 'afterBackground', 
-        OutlineTested::AFTER => 'afterOutline'
+        OutlineTested::AFTER => 'afterOutline',
+        ExerciseCompleted::AFTER => 'afterExercise'
     );
   }
 
@@ -93,6 +96,10 @@ class EventListener implements EventSubscriberInterface
   
   
   public function afterSuite(AfterSuiteTested $event)
+  {
+  }
+  
+  public function afterExercise(AfterExerciseCompleted $event)
   {
     $features = $this->features;
     $rendered = $this->templating->render($this->template, array('features' => $features, 'statistics' => $this->statistics));

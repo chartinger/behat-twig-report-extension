@@ -48,7 +48,7 @@ default:
     chartinger\Behat\AroundHookExtension\AroundHookExtension:
       templates:
         dir: /path/to/templates
-        file: yourtamplate.twig
+        file: yourtemplate.twig
       output:
         file: ./output/index.html
 ```
