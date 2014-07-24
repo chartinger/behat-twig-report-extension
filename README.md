@@ -33,7 +33,7 @@ To activate this extension add this to your `behat.yml`
 ```YAML
 default:
   extensions:
-    chartinger\Behat\AroundHookExtension\AroundHookExtension:
+    chartinger\Behat\TwigReportExtension\Extension:
       output:
         file: ./output/index.html
 ```
@@ -45,7 +45,7 @@ You can confgure the templates as well as the output file.
 ```YAML
 default:
   extensions:
-    chartinger\Behat\AroundHookExtension\AroundHookExtension:
+    chartinger\Behat\TwigReportExtension\Extension:
       templates:
         dir: /path/to/templates
         file: yourtemplate.twig
