@@ -30,6 +30,7 @@ class EventListener implements EventSubscriberInterface
   private $templating;
   private $template;
   private $output;
+  private $output_directory;
   
   private $features = array();
   private $scenarios = array();
@@ -42,7 +43,11 @@ class EventListener implements EventSubscriberInterface
   {
     $this->templating = $templating;
     $this->counter = 0;
-    
+    $this->resetStats();
+  }
+  
+  private function resetStats()
+  {
     $this->statistics["scenarios"] = array("total" => 0, "passed" => 0, "failed" => 0, "skipped" => 0, "pending" => 0);
     $this->statistics["steps"] = array("total" => 0, "passed" => 0, "failed" => 0, "skipped" => 0, "pending" => 0);
   }
@@ -97,13 +102,30 @@ class EventListener implements EventSubscriberInterface
   
   public function afterSuite(AfterSuiteTested $event)
   {
+    if ($this->output_directory)
+    {
+      $suite_name = ($event->getEnvironment()->getSuite()->getName());
+      $features = $this->features;
+      $rendered = $this->templating->render($this->template, array('features' => $features, 'statistics' => $this->statistics));
+      file_put_contents($this->output_directory . "/". $suite_name . ".html", $rendered);
+      
+      $this->features = array();
+      $this->scenarios = array();
+      $this->background = null;
+      $this->steps = array();
+      
+      $this->resetStats();
+    }
   }
   
   public function afterExercise(AfterExerciseCompleted $event)
   {
-    $features = $this->features;
-    $rendered = $this->templating->render($this->template, array('features' => $features, 'statistics' => $this->statistics));
-    file_put_contents($this->output, $rendered);
+    if (!$this->output_directory)
+    {
+      $features = $this->features;
+      $rendered = $this->templating->render($this->template, array('features' => $features, 'statistics' => $this->statistics));
+      file_put_contents($this->output, $rendered);
+    }
   }
   
   private function updateStats($category,$result)
@@ -133,5 +155,10 @@ class EventListener implements EventSubscriberInterface
   public function setOutputFile($file)
   {
     $this->output = $file;
+  }
+  
+  public function setOutputDirectory($directory)
+  {
+    $this->output_directory = $directory;
   }
 }

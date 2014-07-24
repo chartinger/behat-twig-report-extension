@@ -43,6 +43,7 @@ class Extension implements ExtensionInterface
     $definition->addTag(EventDispatcherExtension::SUBSCRIBER_TAG, array());
     $definition->addMethodCall("setTemplate",array($config["templates"]["file"]));
     $definition->addMethodCall("setOutputFile",array($config["output"]["file"]));
+    $definition->addMethodCall("setOutputDirectory",array($config["output"]["dir"]));
     $container->setDefinition("behat.twig_output.listener.event", $definition);
   }
   
@@ -69,6 +70,7 @@ class Extension implements ExtensionInterface
         ->end()
         ->arrayNode('output')
           ->children()
+            ->scalarNode("dir")->defaultNull()->end()
             ->scalarNode("file")->isRequired()->end()
           ->end()
         ->end()
