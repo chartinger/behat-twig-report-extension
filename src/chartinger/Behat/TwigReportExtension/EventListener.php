@@ -48,8 +48,12 @@ class EventListener implements EventSubscriberInterface
   
   private function resetStats()
   {
-    $this->statistics["scenarios"] = array("total" => 0, "passed" => 0, "failed" => 0, "skipped" => 0, "pending" => 0);
-    $this->statistics["steps"] = array("total" => 0, "passed" => 0, "failed" => 0, "skipped" => 0, "pending" => 0);
+    $empty        = array("total" => 0, "passed" => 0, "failed" => 0, "skipped" => 0, "pending" => 0);
+    $this->statistics = array(
+      'features'  => $empty,
+      'scenarios' => $empty,
+      'steps'     => $empty
+    );
   }
   
   static public function getSubscribedEvents()
@@ -87,6 +91,7 @@ class EventListener implements EventSubscriberInterface
   
   public function afterFeature(AfterFeatureTested $event)
   {
+    $this->updateStats("features", $event->getTestResult()->getResultCode());
     $this->features[] = new Feature($event, $this->scenarios, $this->background);
     $this->scenarios = array();
     $this->background = null;
