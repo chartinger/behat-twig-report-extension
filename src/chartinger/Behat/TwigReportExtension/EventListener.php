@@ -8,7 +8,6 @@ use Behat\Behat\EventDispatcher\Event\AfterScenarioTested;
 use Behat\Behat\EventDispatcher\Event\FeatureTested;
 use Behat\Behat\EventDispatcher\Event\AfterFeatureTested;
 use Behat\Testwork\EventDispatcher\Event\SuiteTested;
-use Behat\Testwork\EventDispatcher\Event\AfterSuiteTested;
 use Behat\Behat\EventDispatcher\Event\StepTested;
 use Behat\Behat\EventDispatcher\Event\AfterStepTested;
 use Behat\Testwork\Tester\Result\TestResult;
@@ -23,7 +22,6 @@ use chartinger\Behat\TwigReportExtension\facades\Background;
 use chartinger\Behat\TwigReportExtension\facades\Scenario;
 use chartinger\Behat\TwigReportExtension\facades\OutlineScenario;
 use Behat\Testwork\EventDispatcher\Event\ExerciseCompleted;
-use Behat\Testwork\EventDispatcher\Event\AfterExerciseCompleted;
 
 class EventListener implements EventSubscriberInterface
 {
@@ -105,7 +103,7 @@ class EventListener implements EventSubscriberInterface
   }
   
   
-  public function afterSuite(AfterSuiteTested $event)
+  public function afterSuite(SuiteTested $event)
   {
     if ($this->output_directory)
     {
@@ -123,7 +121,7 @@ class EventListener implements EventSubscriberInterface
     }
   }
   
-  public function afterExercise(AfterExerciseCompleted $event)
+  public function afterExercise(ExerciseCompleted $event)
   {
     if (!$this->output_directory)
     {
