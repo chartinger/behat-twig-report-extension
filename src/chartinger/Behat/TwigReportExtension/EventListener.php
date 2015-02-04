@@ -22,7 +22,6 @@ use chartinger\Behat\TwigReportExtension\facades\Background;
 use chartinger\Behat\TwigReportExtension\facades\Scenario;
 use chartinger\Behat\TwigReportExtension\facades\OutlineScenario;
 use Behat\Testwork\EventDispatcher\Event\ExerciseCompleted;
-use Behat\Testwork\EventDispatcher\Event\AfterExerciseCompleted;
 
 class EventListener implements EventSubscriberInterface
 {
@@ -122,7 +121,7 @@ class EventListener implements EventSubscriberInterface
     }
   }
   
-  public function afterExercise(AfterExerciseCompleted $event)
+  public function afterExercise(ExerciseCompleted $event)
   {
     if (!$this->output_directory)
     {
