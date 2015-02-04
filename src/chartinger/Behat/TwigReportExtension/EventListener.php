@@ -8,7 +8,6 @@ use Behat\Behat\EventDispatcher\Event\AfterScenarioTested;
 use Behat\Behat\EventDispatcher\Event\FeatureTested;
 use Behat\Behat\EventDispatcher\Event\AfterFeatureTested;
 use Behat\Testwork\EventDispatcher\Event\SuiteTested;
-use Behat\Testwork\EventDispatcher\Event\AfterSuiteTested;
 use Behat\Behat\EventDispatcher\Event\StepTested;
 use Behat\Behat\EventDispatcher\Event\AfterStepTested;
 use Behat\Testwork\Tester\Result\TestResult;
@@ -105,7 +104,7 @@ class EventListener implements EventSubscriberInterface
   }
   
   
-  public function afterSuite(AfterSuiteTested $event)
+  public function afterSuite(SuiteTested $event)
   {
     if ($this->output_directory)
     {
