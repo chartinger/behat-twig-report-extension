@@ -1,4 +1,4 @@
-{% macro result_panel_class(result) %}
+EventListener.php{% macro result_panel_class(result) %}
     {% if result == 20 %}
       panel-warning
     {% elseif result == 99 %}
@@ -36,7 +36,7 @@
 {% import _self as default %}
 <html>
 <head>
-  <title>Behat Twig Output</title>
+  <title>{{ suites }}</title>
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -97,7 +97,15 @@
                   {% for step in feature.background.steps %}
                      <li class="list-group-item {% if step.result == 20 %}list-group-item-warning{% elseif step.result == 10%}disabled{% elseif step.result == 99 %}list-group-item-danger{% else %}list-group-item-success{% endif %}">
                      {{ default.result_glyph(step.result) }}
-                     {{ step.text }}
+                     {{ step.text }} 
+                     {%  if  (step.exception is defined) %}
+                            {%  if step.exception.message is not empty %}
+                                <span style="display:block;">
+                                    <span class="glyphicon glyphicon-flag"></span>
+                                 {{ step.exception.message }}
+                                </span>
+                            {% endif %}
+                     {%  endif %}
                      {% for argument in step.arguments %}
                         {% if argument.text %}<pre class="stepargument"><code>{{ argument.text }}</code></pre>{% endif %}
                         {% if argument.table %}
@@ -139,8 +147,16 @@
                   {% for step in scenario.steps %}
                      <li class="list-group-item {% if step.result == 20 %}list-group-item-warning{% elseif step.result == 10%}disabled{% elseif step.result == 99 %}list-group-item-danger{% else %}list-group-item-success{% endif %}">
                        {{ default.result_glyph(step.result) }}
-                       {{ step.text }}
-                       {% for argument in step.arguments %}
+                       {{ step.text }} 
+                        {%  if  (step.exception is defined) %}
+                            {%  if step.exception.message is not empty %}
+                                <span style="display:block;">
+                                    <span class="glyphicon glyphicon-flag"></span>
+                                    {{ step.exception.message }}
+                                </span>
+                            {% endif %}
+                        {%  endif %}
+                        {% for argument in step.arguments %}
                         {% if argument.text %}<pre class="stepargument"><code>{{ argument.text }}</code></pre>{% endif %}
                         {% if argument.table %}
                         <div class="panel panel-default stepargument"><div class="panel-body">
