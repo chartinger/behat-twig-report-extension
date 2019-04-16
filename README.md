@@ -1,3 +1,7 @@
+# This project is not maintained anymore!
+
+Please use alternatives like https://github.com/dutchiexl/BehatHtmlFormatterPlugin
+
 behat-twig-report-extension
 ===========================
 
